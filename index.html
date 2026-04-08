@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Culture Bridge | Japan vs USA</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --jp: #A8001E;
+  --jp-dark: #7A0016;
+  --jp-light: #fdf0f2;
+  --us: #1E2D5A;
+  --us-dark: #121D3A;
+  --us-light: #f0f2f8;
+  --nav: #0D1425;
+  --bg: #F7F6F2;
+  --white: #FFFFFF;
+  --ink: #181818;
+  --muted: #6B6B6B;
+  --border: #E5E3DC;
+  --gold: #C9A84C;
+}
+ 
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--ink); overflow-x: hidden; }
+ 
+.nav {
+  background: var(--nav);
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.nav-logo { height: 30px; object-fit: contain; cursor: pointer; opacity: 0.9; transition: opacity 0.2s; }
+.nav-logo:hover { opacity: 1; }
+.nav-tabs { display: flex; gap: 2px; }
+.tab {
+  padding: 0 22px;
+  height: 68px;
+  color: rgba(255,255,255,0.45);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  background: none;
+  border-bottom: 3px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.tab:hover { color: rgba(255,255,255,0.8); }
+.tab.active { color: #fff; border-bottom-color: var(--gold); }
+ 
+.page { display: none; animation: fadeUp 0.45s ease both; }
+.page.active { display: block; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+ 
+#home-hero { height: 480px; display: flex; position: relative; overflow: hidden; }
+.hs { flex: 1; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.hs.jp { clip-path: polygon(0 0, 100% 0, 88% 100%, 0 100%); margin-right: -6%; z-index: 2; background: var(--jp); }
+.hs.us { z-index: 1; background: var(--us); }
+.hs-bg { position: absolute; inset: 0; background-size: cover; background-position: center top; opacity: 0.6; transition: opacity 0.4s; }
+.hs.jp .hs-bg { background-image: url('image/Japan.jpg'); }
+.hs.us .hs-bg { background-image: url('image/US.jpg'); }
+.hs:hover .hs-bg { opacity: 0.55; }
+.hs-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,0,0,0.25) 0%, transparent 60%); }
+.hs-content { position: relative; z-index: 4; text-align: center; color: #fff; }
+.hs-flag { font-size: 48px; margin-bottom: 12px; display: block; }
+.hs-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(44px, 5.5vw, 72px); font-weight: 700; letter-spacing: -1px; line-height: 1; text-shadow: 0 2px 20px rgba(0,0,0,0.4); }
+.hs-sub { margin-top: 8px; font-size: 11px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; opacity: 0.65; }
+ 
+.vs-circle {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  z-index: 10; width: 66px; height: 66px; background: var(--white);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+  font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 20px; color: var(--ink);
+  animation: popIn 0.8s cubic-bezier(0.34,1.56,0.64,1) both; animation-delay: 0.2s;
+}
+@keyframes popIn {
+  from { opacity: 0; transform: translate(-50%,-50%) scale(0.3); }
+  to   { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+}
+ 
+.about { background: var(--white); padding: 80px 48px; border-bottom: 1px solid var(--border); }
+.about-inner { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: 260px 1fr; gap: 60px; align-items: center; }
+.about-photo { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.12); }
+.about-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--jp); margin-bottom: 12px; }
+.about-name { font-family: 'Cormorant Garamond', serif; font-size: 46px; font-weight: 700; line-height: 1.1; margin-bottom: 6px; }
+.about-title { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+.about-divider { width: 40px; height: 2px; background: var(--gold); margin-bottom: 24px; }
+.about-text { font-size: 15px; line-height: 1.85; color: #444; }
+.about-text + .about-text { margin-top: 14px; }
+ 
+.sec-hero { height: 380px; position: relative; overflow: hidden; background: #000; display: flex; align-items: flex-end; padding: 0 60px 48px; }
+.sec-hero-bg { position: absolute; inset: 0; background-size: cover; background-position: center center; background-repeat: no-repeat; opacity: 0.6; }
+.sec-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.78) 30%, rgba(0,0,0,0.08) 100%); }
+.sec-hero-title { position: relative; z-index: 2; font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 5vw, 64px); font-weight: 700; color: #fff; letter-spacing: -1px; }
+.sec-hero-title em { font-style: normal; color: var(--gold); }
+ 
+.cw { max-width: 1040px; margin: 0 auto; padding: 64px 28px; }
+.topic-head { display: flex; align-items: center; gap: 14px; margin: 56px 0 24px; font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; }
+.topic-head:first-child { margin-top: 0; }
+.topic-pip { width: 5px; height: 28px; background: var(--jp); border-radius: 3px; flex-shrink: 0; }
+ 
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.08); margin-bottom: 12px; }
+.cc { padding: 32px 36px; }
+.cc.jp { background: var(--jp); color: #fff; }
+.cc.us { background: var(--us); color: #fff; }
+.cc-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.cc-flag { font-size: 24px; }
+.cc-country { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; opacity: 0.75; }
+.cc-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 10px; line-height: 1.2; }
+.cc-text { font-size: 14px; line-height: 1.75; opacity: 0.88; }
+.cc-tag { display: inline-block; margin-top: 16px; padding: 4px 13px; border-radius: 100px; font-size: 11px; font-weight: 600; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.25); }
+ 
+.list-card { background: var(--white); border-radius: 14px; padding: 32px 36px; margin-bottom: 14px; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+.list-card-label { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+.list-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.list-col-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.list-col-flag { font-size: 18px; }
+.list-col-country { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+.list-col.jp .list-col-country { color: var(--jp); }
+.list-col.us .list-col-country { color: var(--us); }
+.list-col-text { font-size: 14px; line-height: 1.75; color: #444; }
+.section-divider { height: 1px; background: var(--border); margin: 48px 0; }
+ 
+footer { background: var(--nav); padding: 56px 48px; text-align: center; border-top: 1px solid rgba(255,255,255,0.06); }
+.footer-logo { height: 34px; object-fit: contain; opacity: 0.8; margin-bottom: 20px; }
+.footer-text { color: rgba(255,255,255,0.4); font-size: 12px; letter-spacing: 1px; line-height: 1.8; }
+ 
+@media (max-width: 760px) {
+  .nav { padding: 0 20px; }
+  .tab { padding: 0 12px; font-size: 10px; }
+  #home-hero { height: 360px; }
+  .hs.jp { clip-path: polygon(0 0, 100% 0, 90% 100%, 0 100%); margin-right: -4%; }
+  .compare-grid, .list-grid { grid-template-columns: 1fr; }
+  .about-inner { grid-template-columns: 1fr; text-align: center; }
+  .about-photo { width: 180px; margin: 0 auto; }
+  .about-divider { margin: 24px auto; }
+  .cw { padding: 40px 20px; }
+  .sec-hero { padding: 0 28px 36px; height: 220px; }
+}
+</style>
+</head>
+<body>
+ 
+<nav class="nav">
+  <img src="image/Culture%20Bridge%20(Logo).png" alt="Culture Bridge" class="nav-logo" onclick="show('home')">
+  <div class="nav-tabs">
+    <button class="tab active" onclick="show('home', this)">Home</button>
+    <button class="tab" onclick="show('daily', this)">Daily Life</button>
+    <button class="tab" onclick="show('school', this)">School Life</button>
+    <button class="tab" onclick="show('business', this)">Business Life</button>
+  </div>
+</nav>
+ 
+<div id="home" class="page active">
+  <div id="home-hero">
+    <div class="hs jp">
+      <div class="hs-bg"></div>
+      <div class="hs-overlay"></div>
+      <div class="hs-content">
+        <span class="hs-flag">🇯🇵</span>
+        <div class="hs-name">Japan</div>
+        <div class="hs-sub">日本</div>
+      </div>
+    </div>
+    <div class="vs-circle">VS</div>
+    <div class="hs us">
+      <div class="hs-bg"></div>
+      <div class="hs-overlay"></div>
+      <div class="hs-content">
+        <span class="hs-flag">🇺🇸</span>
+        <div class="hs-name">USA</div>
+        <div class="hs-sub">United States</div>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="about">
+    <div class="about-inner">
+      <img src="image/Profile.jpg" alt="Amaki Hori" class="about-photo">
+      <div>
+        <div class="about-eyebrow">About the Author</div>
+        <h2 class="about-name">Amaki Hori</h2>
+        <div class="about-title">Accounting Major · WDD 130 Student · BYU-Idaho</div>
+        <div class="about-divider"></div>
+        <p class="about-text">Hello, I'm Amaki Hori. I spent the first 18 years of my life in Japan, absorbing its unique blend of tradition and modernity. My desire for a global education led me on a journey through community college before I transferred to BYU-Idaho.</p>
+        <p class="about-text">I created this site to share my first-hand experience of the fascinating differences between Japan and the United States across Daily Life, School Life, and Business. Mastering web fundamentals is essential for my future vision of launching a business leveraging finance expertise.</p>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<div id="daily" class="page">
+  <div class="sec-hero">
+    <div class="sec-hero-bg" style="background-image: url('image/Daily Life.jpeg'); background-position: center 30%;"></div>
+    <div class="sec-hero-overlay"></div>
+    <h1 class="sec-hero-title">Daily <em>Life</em></h1>
+  </div>
+  <div class="cw">
+    <div class="topic-head"><span class="topic-pip"></span>Convenience Store vs. Gas Station</div>
+    <div class="compare-grid">
+      <div class="cc jp">
+        <div class="cc-head"><span class="cc-flag">🇯🇵</span><span class="cc-country">Japan</span></div>
+        <div class="cc-title">The Konbini is Everything</div>
+        <p class="cc-text">Convenience stores (konbini) are everywhere — 7-Eleven, Lawson, FamilyMart. They sell hot meals, pay your bills, let you print documents, and have ATMs. Open 24/7 and absolutely essential to daily life.</p>
+        <span class="cc-tag">Konbini Culture</span>
+      </div>
+      <div class="cc us">
+        <div class="cc-head"><span class="cc-flag">🇺🇸</span><span class="cc-country">USA</span></div>
+        <div class="cc-title">The Gas Station Stop</div>
+        <p class="cc-text">Gas station convenience stores are roadside staples for drivers — fuel up, grab snacks, maybe a coffee. Far fewer services than konbini, more spread out, and primarily serving car owners.</p>
+        <span class="cc-tag">Drive-Through Life</span>
+      </div>
+    </div>
+ 
+    <div class="topic-head"><span class="topic-pip"></span>Getting Around</div>
+    <div class="compare-grid">
+      <div class="cc jp">
+        <div class="cc-head"><span class="cc-flag">🇯🇵</span><span class="cc-country">Japan</span></div>
+        <div class="cc-title">The Train Nation</div>
+        <p class="cc-text">Trains and buses are the backbone of daily travel. The rail network is punctual to the second. Most people commute by train, and a car isn't necessary — especially in cities like Tokyo and Osaka.</p>
+        <span class="cc-tag">Train Nation</span>
+      </div>
+      <div class="cc us">
+        <div class="cc-head"><span class="cc-flag">🇺🇸</span><span class="cc-country">USA</span></div>
+        <div class="cc-title">Cars Are King</div>
+        <p class="cc-text">Most Americans rely entirely on personal vehicles. Road trips are a cultural institution, and in many cities public transit barely exists. No car, no freedom.</p>
+        <span class="cc-tag">Car Culture</span>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<div id="school" class="page">
+  <div class="sec-hero">
+    <div class="sec-hero-bg" style="background-image: url('image/School Life.jpg'); background-position: center 40%;"></div>
+    <div class="sec-hero-overlay"></div>
+    <h1 class="sec-hero-title">School <em>Life</em></h1>
+  </div>
+  <div class="cw">
+    <div class="topic-head"><span class="topic-pip"></span>High School</div>
+ 
+    <div class="list-card">
+      <div class="list-card-label">Club Activities</div>
+      <div class="list-grid">
+        <div class="list-col jp">
+          <div class="list-col-head"><span class="list-col-flag">🇯🇵</span><span class="list-col-country">Japan</span></div>
+          <p class="list-col-text">Club activities (bukatsu) are a huge part of high school. Students practice almost every day after school, often on weekends too. Quitting is seen as dishonorable — commitment is everything.</p>
+        </div>
+        <div class="list-col us">
+          <div class="list-col-head"><span class="list-col-flag">🇺🇸</span><span class="list-col-country">USA</span></div>
+          <p class="list-col-text">Extracurriculars are important for college apps but less intense. Students try sports, clubs, student council. Seasons are shorter, and it's normal to switch or try multiple activities.</p>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="list-card">
+      <div class="list-card-label">College Entrance Exams</div>
+      <div class="list-grid">
+        <div class="list-col jp">
+          <div class="list-col-head"><span class="list-col-flag">🇯🇵</span><span class="list-col-country">Japan</span></div>
+          <p class="list-col-text">The entrance exam is a massive, high-stakes event. Students spend years preparing, often attending cram schools (juku). The exam largely determines which university you attend.</p>
+        </div>
+        <div class="list-col us">
+          <div class="list-col-head"><span class="list-col-flag">🇺🇸</span><span class="list-col-country">USA</span></div>
+          <p class="list-col-text">The SAT/ACT matters, but colleges look at the full picture — essays, GPA, extracurriculars, recommendations. One bad test score won't ruin everything. Retakes are normal.</p>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="section-divider"></div>
+ 
+    <div class="topic-head"><span class="topic-pip"></span>College / University</div>
+ 
+    <div class="list-card">
+      <div class="list-card-label">GPA</div>
+      <div class="list-grid">
+        <div class="list-col jp">
+          <div class="list-col-head"><span class="list-col-flag">🇯🇵</span><span class="list-col-country">Japan</span></div>
+          <p class="list-col-text">Traditionally, GPA mattered little — getting into a top university was the achievement. Once in, graduating was the goal. Many companies hired based on school name, not grades.</p>
+        </div>
+        <div class="list-col us">
+          <div class="list-col-head"><span class="list-col-flag">🇺🇸</span><span class="list-col-country">USA</span></div>
+          <p class="list-col-text">GPA is tracked closely throughout college. It affects grad school applications, scholarships, internships, and first jobs. A 3.5+ is often expected by competitive employers.</p>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="list-card">
+      <div class="list-card-label">Choosing Your Major</div>
+      <div class="list-grid">
+        <div class="list-col jp">
+          <div class="list-col-head"><span class="list-col-flag">🇯🇵</span><span class="list-col-country">Japan</span></div>
+          <p class="list-col-text">You must declare your faculty before entering university. You apply to a specific department and switching is very rare. Your major defines your entire university experience from day one.</p>
+        </div>
+        <div class="list-col us">
+          <div class="list-col-head"><span class="list-col-flag">🇺🇸</span><span class="list-col-country">USA</span></div>
+          <p class="list-col-text">Many students start undeclared and explore. You typically declare a major at the end of sophomore year. Changing majors is common and normal — the system is designed for exploration.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+
+<div id="business" class="page">
+  <div class="sec-hero">
+    <div class="sec-hero-bg" style="background-image: url('image/US.jpg'); background-position: center 60%;"></div>
+    <div class="sec-hero-overlay"></div>
+    <h1 class="sec-hero-title">Business <em>Life</em></h1>
+  </div>
+  <div class="cw">
+    <div class="topic-head"><span class="topic-pip"></span>Communication Style</div>
+    <div class="compare-grid">
+      <div class="cc jp">
+        <div class="cc-head"><span class="cc-flag">🇯🇵</span><span class="cc-country">Japan</span></div>
+        <div class="cc-title">High-Context & Indirect</div>
+        <p class="cc-text">Communication is indirect and high-context. Disagreement is rarely stated openly — harmony must be preserved. Reading between the lines and respecting hierarchy through polite speech is essential.</p>
+        <span class="cc-tag">Indirect / Harmony-First</span>
+      </div>
+      <div class="cc us">
+        <div class="cc-head"><span class="cc-flag">🇺🇸</span><span class="cc-country">USA</span></div>
+        <div class="cc-title">Low-Context & Direct</div>
+        <p class="cc-text">Communication is direct and low-context. Employees are expected to share opinions clearly, push back on ideas, and be assertive. Silence is not seen as polite — saying nothing means agreeing.</p>
+        <span class="cc-tag">Direct / Assertive</span>
+      </div>
+    </div>
+ 
+    <div class="topic-head"><span class="topic-pip"></span>Working Environment</div>
+ 
+    <div class="list-card">
+      <div class="list-card-label">Results-Based vs. Group-Based</div>
+      <div class="list-grid">
+        <div class="list-col jp">
+          <div class="list-col-head"><span class="list-col-flag">🇯🇵</span><span class="list-col-country">Japan</span></div>
+          <p class="list-col-text">Group harmony and collective achievement come first. Teams move together, consensus is required, and standing out too much can be uncomfortable. The nail that sticks up gets hammered down.</p>
+        </div>
+        <div class="list-col us">
+          <div class="list-col-head"><span class="list-col-flag">🇺🇸</span><span class="list-col-country">USA</span></div>
+          <p class="list-col-text">Meritocracy is the ideal — your individual results drive promotions and pay. Standing out is celebrated. Annual performance reviews measure individual contributions directly.</p>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="list-card">
+      <div class="list-card-label">Fixed Hours vs. Overtime</div>
+      <div class="list-grid">
+        <div class="list-col jp">
+          <div class="list-col-head"><span class="list-col-flag">🇯🇵</span><span class="list-col-country">Japan</span></div>
+          <p class="list-col-text">Staying late shows dedication. Leaving on time while your boss is still working is seen as disrespectful. Overtime culture is deeply embedded — government reforms are slowly changing this.</p>
+        </div>
+        <div class="list-col us">
+          <div class="list-col-head"><span class="list-col-flag">🇺🇸</span><span class="list-col-country">USA</span></div>
+          <p class="list-col-text">Work-life balance is increasingly valued. Salaried employees aim to protect personal time. "Hustle culture" exists but is being challenged. Leaving at 5 PM is generally acceptable.</p>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="list-card">
+      <div class="list-card-label">Career Path</div>
+      <div class="list-grid">
+        <div class="list-col jp">
+          <div class="list-col-head"><span class="list-col-flag">🇯🇵</span><span class="list-col-country">Japan</span></div>
+          <p class="list-col-text">Lifetime employment at one company has been the norm. Loyalty is prized, promotions come with seniority, and switching companies too often raises red flags with employers.</p>
+        </div>
+        <div class="list-col us">
+          <div class="list-col-head"><span class="list-col-flag">🇺🇸</span><span class="list-col-country">USA</span></div>
+          <p class="list-col-text">Job-hopping is expected and encouraged. Staying at one company for too long can look passive. Changing jobs every 2–4 years is the fastest way to increase salary and responsibility.</p>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="list-card">
+      <div class="list-card-label">Job Security</div>
+      <div class="list-grid">
+        <div class="list-col jp">
+          <div class="list-col-head"><span class="list-col-flag">🇯🇵</span><span class="list-col-country">Japan</span></div>
+          <p class="list-col-text">Firing employees is difficult legally and culturally. Layoffs are a last resort. Companies may reassign or demote rather than fire. Employees expect long-term security in exchange for loyalty.</p>
+        </div>
+        <div class="list-col us">
+          <div class="list-col-head"><span class="list-col-flag">🇺🇸</span><span class="list-col-country">USA</span></div>
+          <p class="list-col-text">Most employment is "at-will" — you can be let go at almost any time for almost any legal reason, and you can quit just as freely. Layoffs are routine during economic shifts.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<footer>
+  <img src="image/Culture%20Bridge%20(Logo).png" alt="Culture Bridge" class="footer-logo">
+  <p class="footer-text">Japan 🇯🇵 vs USA 🇺🇸 · Cultural Comparison Guide<br>© 2026 Culture Bridge · Created by Amaki Hori for WDD 130</p>
+</footer>
+ 
+<script>
+function show(pageId, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(pageId).classList.add('active');
+  if (btn) btn.classList.add('active');
+  else document.querySelector('.tab').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
+ 
